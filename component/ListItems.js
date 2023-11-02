@@ -14,10 +14,9 @@ function ListItems(props) {
     let { deleteItem, edit } = props;
 
     const editBtn = (ProductIdToEdit) => {
-     
+
         // console.log(Text_value)
         if (!Text_value) {
-            console.log("edit btn clicked.....")
             Alert.alert("Alert", "Task can not be empty");
             return;
         }
@@ -41,17 +40,24 @@ function ListItems(props) {
                                     {product.productName}
                                 </Text>
 
-                                <Icon name='edit' color="blue" onPress={() => {
-                                    setOverlayVisibility(true),
-                                    setProductIdToEdit(product.id)
-                                
-                                }} />
+                                <View style={styles.btns}>
+                                    <Icon name='edit' color="blue" onPress={() => {
+                                        setOverlayVisibility(true),
+                                            setProductIdToEdit(product.id),
+                                            setTextValue(product.productName);
 
-                                <Icon name='delete' color="blue" onPress={() => { deleteItem(product.id) }} />
+                                    }} />
+
+                                    <Icon name='delete' color="blue" onPress={() => { deleteItem(product.id) }} />
+                                </View>
+
+
 
                                 <Overlay isVisible={OverlayVisibility} onBackdropPress={_onBackdropPress}>
                                     <View style={styles.InputOverlayView}>
-                                        <Input placeholder="Enter product" onChangeText={(value) => setTextValue(value)} />
+                                        <Input placeholder="Enter product"
+                                            value={Text_value}
+                                            onChangeText={(value) => setTextValue(value)} />
                                     </View>
 
                                     <View style={styles.OverlayBtn}>
@@ -96,7 +102,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        padding: 30,
+        padding: 10,
         backgroundColor: "white",
         marginTop: 10,
 
@@ -122,10 +128,20 @@ const styles = StyleSheet.create({
     },
 
     productDisplayText: {
-        fontSize: 20,
-        color: "blue"
+        flex: 6,
+        fontSize: 18,
+        color: "blue",
+        flexWrap: "wrap",
+        padding: 5,
+
     }
     ,
+
+    btns: {
+        flex: 4,
+        flexDirection: "row",
+        justifyContent: "space-around"
+    },
 
     InputOverlayView: {
         flexDirection: "row",
@@ -137,7 +153,7 @@ const styles = StyleSheet.create({
     ,
     OverlayBtn: {
         flexDirection: "row",
-        justifyContent: 'space-around',
+        justifyContent: 'space-between',
         alignItems: "baseline"
     }
 })
