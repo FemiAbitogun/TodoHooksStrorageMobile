@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View,StyleSheet } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 
 
 
@@ -12,12 +12,12 @@ function Header() {
 }
 
 
-const styles= StyleSheet.create({
+const styles = StyleSheet.create({
 
-    textColor:{
-        color:"white",
-        fontSize:25,
-        fontStyle:"normal"
+    textColor: {
+        color: "white",
+        fontSize: 25,
+        fontStyle: "normal"
     }
 
 })

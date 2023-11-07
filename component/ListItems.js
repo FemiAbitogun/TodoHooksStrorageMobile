@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { Text, View, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { Text, View, TouchableOpacity, StyleSheet, Alert, FlatList } from 'react-native';
 import { Icon, Input, Overlay, Button } from 'react-native-elements';
 
 function ListItems(props) {
@@ -28,83 +28,86 @@ function ListItems(props) {
 
     const _onBackdropPress = () => setOverlayVisibility(false)
 
+    const renderItem = ({ item }) => {
+        return (
+            <View>
+                <TouchableOpacity key={item.id} >
+                    <View style={styles.productDisplay} >
+                        <Text style={styles.productDisplayText}>
+                            {item.productName}
+                        </Text>
 
+                        <View style={styles.btns}>
+                            <Icon name='edit' color="blue" onPress={() => {
+                                setOverlayVisibility(true),
+                                    setProductIdToEdit(item.id),
+                                    setTextValue(item.productName);
+
+                            }} />
+
+                            <Icon name='delete' color="blue" onPress={() => { deleteItem(item.id) }} />
+                        </View>
+
+
+
+                        <Overlay isVisible={OverlayVisibility} onBackdropPress={_onBackdropPress}>
+                            <View style={styles.InputOverlayView}>
+                                <Input placeholder="Enter product"
+                                    value={Text_value}
+                                    onChangeText={(value) => setTextValue(value)} />
+                            </View>
+
+                            <View style={styles.OverlayBtn}>
+                                <Button title="Save"
+                                    buttonStyle={{
+                                        width: 80
+                                    }}
+
+                                    onPress={() => editBtn(ProductIdToEdit)}
+
+                                />
+                                <Button title="Cancel" buttonStyle={{
+                                    backgroundColor: "crimson",
+                                    width: 80
+                                }} onPress={() => setOverlayVisibility(false)} />
+                            </View>
+
+                        </Overlay>
+
+
+                    </View>
+                </TouchableOpacity>
+
+            </View>
+
+            // null
+
+        )
+
+    }
     return (
         <View>
-            {
-                Products.map((product) => {
-                    return (
-                        <TouchableOpacity key={product.id} >
-                            <View style={styles.productDisplay}>
-                                <Text style={styles.productDisplayText}>
-                                    {product.productName}
-                                </Text>
 
-                                <View style={styles.btns}>
-                                    <Icon name='edit' color="blue" onPress={() => {
-                                        setOverlayVisibility(true),
-                                            setProductIdToEdit(product.id),
-                                            setTextValue(product.productName);
-
-                                    }} />
-
-                                    <Icon name='delete' color="blue" onPress={() => { deleteItem(product.id) }} />
-                                </View>
-
-
-
-                                <Overlay isVisible={OverlayVisibility} onBackdropPress={_onBackdropPress}>
-                                    <View style={styles.InputOverlayView}>
-                                        <Input placeholder="Enter product"
-                                            value={Text_value}
-                                            onChangeText={(value) => setTextValue(value)} />
-                                    </View>
-
-                                    <View style={styles.OverlayBtn}>
-                                        <Button title="Save"
-                                            buttonStyle={{
-                                                width: 80
-                                            }}
-
-                                            onPress={() => editBtn(ProductIdToEdit)}
-
-                                        />
-                                        <Button title="Cancel" buttonStyle={{
-                                            backgroundColor: "crimson",
-                                            width: 80
-                                        }} onPress={() => setOverlayVisibility(false)} />
-                                    </View>
-
-                                </Overlay>
-
-
-                            </View>
-                        </TouchableOpacity>
-
-
-                    )
-                })
-
-            }
+            <FlatList
+                data={Products}
+                renderItem={({ item }) => renderItem({ item })}
+                keyExtractor={item => item.id}
+            />
 
         </View>
     )
 }
-
-
-
 const styles = StyleSheet.create({
-
-
     productDisplay: {
         width: "100%",
-        height: 100,
+        height: 150,
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        padding: 10,
+        padding: 20,
         backgroundColor: "white",
-        marginTop: 10,
+        // marginTop: 10,
+        marginBottom: 5,
 
 
 

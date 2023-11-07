@@ -3,17 +3,17 @@ import { View, StyleSheet } from 'react-native';
 import { Input, Button } from 'react-native-elements';
 
 function DataInput(props) {
-    const {submit } = props;
+    const { submit } = props;
     const [inpuText, setInputText] = useState("");
 
-    const clearInputText=()=>{
+    const clearInputText = () => {
         setInputText("");
-        return  null;
+        return null;
     }
     return (
         <View style={styles.InputSection}>
-            <Input placeholder='Add Task' style={{ padding: 10 }} onChangeText={(text_) => setInputText(text_)} value={inpuText}/>
-            <Button title="Submit" onPress={()=>{submit(inpuText);clearInputText()} } />
+            <Input placeholder='Add Task' style={{ padding: 10 }} onChangeText={(text_) => setInputText(text_)} value={inpuText} />
+            <Button title="Submit" onPress={() => { submit(inpuText); clearInputText() }} />
         </View>
     )
 }
